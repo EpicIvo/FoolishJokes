@@ -8,18 +8,19 @@
     <meta charset="UTF-8">
     <title>Foolish Jokes</title>
     <link href="style/style.css" type="text/css" rel="stylesheet">
-    <script src="js/main.js">
-    </script>
 </head>
 <body>
+<div id='container' class="container">
 
-<div class="title">
-    Foolish Jokes
+    <div id='title' class="title">
+        Foolish Jokes
+    </div>
+
+    <div id="joke" class="joke">
+
+    </div>
 </div>
-
-<div id="joke" class="joke">
-    
-</div>
-
+<script src="js/main.js">
+</script>
 </body>
 </html>

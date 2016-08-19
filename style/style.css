@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    height: 100vh;
+}
+
+.title{
+    font-family: "Myanmar MN", Avenir;
+    font-size: 60pt;
+    text-align: center;
+    color: #E6E7E8;
+    border-bottom: 2px solid #E6E7E8;
+    vertical-align: bottom;
+}
+.joke{
+
+}
+.jokeContent{
+    font-family: "Myanmar MN", Avenir;
+    font-size: 60pt;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 0;
+    text-align: center;
+    transition: 0.5s;
+}
+.jokeAuthor{
+    font-family: "Myanmar MN", Avenir;
+    font-size: 30pt;
+    text-align: center;
+    color: #E6E7E8;
+    vertical-align: text-bottom;
+}

@@ -18,7 +18,7 @@ try {
 }
 
 //Get the required data from the database
-$query = "SELECT id, title, content, date, author FROM jokes ORDER BY id ASC";
+$query = "SELECT id, content, date, author FROM jokes";
 $result = $connection->query($query);
 
 //Meta information about the returnData
@@ -32,7 +32,6 @@ $returnData['meta'] = [
 while ($row = $result->fetch_assoc()) {
     $returnData['jokes'][] = [
         "id" => $row['id'],
-        "title" => $row['title'],
         "content" => $row['content'],
         "date" => $row['date'],
         "author" => $row['author']
