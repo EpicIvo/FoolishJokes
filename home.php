@@ -19,6 +19,10 @@
     <div id="joke" class="joke">
 
     </div>
+
+</div>
+<div class="downImageContainer" id="downImageContainer">
+    <img class='downImage' id="downImage" src="media/pijlFJ.png">
 </div>
 <script src="js/main.js">
 </script>

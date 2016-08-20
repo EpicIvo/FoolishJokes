@@ -9,6 +9,7 @@ var container = document.getElementById('container');
 var jokeContent = document.createElement('div');
 var jokeAuthor = document.createElement('div');
 var joke = document.getElementById('joke');
+var button = document.getElementById('downImage');
 
 //data variable
 var jokeData;
@@ -82,9 +83,8 @@ container.addEventListener('click', jokeClick);
 
 function jokeClick() {
     jokeNumber++;
-    jokeContent.style.transform = 'scale(1.2)';
+    jokeContent.style.transform = 'scale(1.1)';
     setTimeout(textSmall, 700);
-
 }
 
 function textSmall() {

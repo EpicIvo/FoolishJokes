@@ -1,13 +1,17 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
+body{
+    overflow: hidden;
+}
 
-.container{
+
+.container {
     height: 100vh;
 }
 
-.title{
+.title {
     font-family: "Myanmar MN", Avenir;
     font-size: 60pt;
     text-align: center;
@@ -15,10 +19,12 @@
     border-bottom: 2px solid #E6E7E8;
     vertical-align: bottom;
 }
-.joke{
+
+.joke {
 
 }
-.jokeContent{
+
+.jokeContent {
     font-family: "Myanmar MN", Avenir;
     font-size: 60pt;
     padding-left: 10%;
@@ -27,10 +33,22 @@
     text-align: center;
     transition: 0.5s;
 }
-.jokeAuthor{
+
+.jokeAuthor {
     font-family: "Myanmar MN", Avenir;
     font-size: 30pt;
     text-align: center;
     color: #E6E7E8;
-    vertical-align: text-bottom;
 }
+
+.downImageContainer {
+    text-align: center;
+    vertical-align: text-bottom;
+    margin-top: -220px;
+}
+
+.downImage {
+    transform: scaleY(-1);
+    width: 200px;
+}
+
