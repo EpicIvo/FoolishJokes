@@ -6,10 +6,21 @@
  * Time: 00:56
  */
 
-require_once('/Applications/XAMPP/htdocs/FoolishJokes/database/settings.php');
+header("Access-Control-Allow-Origin: http://foolishjokes.com");
+
+require_once('http://foolishjokes.com/database/settings.php');
+
+$loggedInobj = new stdClass();
+$loggedInobj->loggedIn = false;
+
+session_start();
+if (!isset($_SESSION['loggedIn'])) {
+}else{
+	$loggedInobj->loggedIn = true;
+}
 
 try {
-    $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
+    $connection = new mysqli('localhost', 'simpet2782_fj', 'Arewehuman', 'simpet2782_fj');
 } catch (Exception $e) {
     //Output JSON to the outside world with 501 error
     header("HTTP/1.1 500 Internal Server Error");
@@ -25,7 +36,8 @@ $result = $connection->query($query);
 $returnData['meta'] = [
     "request_uri" => $_SERVER['REQUEST_URI'],
     "query" => $query,
-    "row_count" => $result->num_rows
+    "row_count" => $result->num_rows,
+    "loggedIn" => $loggedInobj->loggedIn
 ];
 
 //Merge the data from the database with the images from the database into the newly created returnData
