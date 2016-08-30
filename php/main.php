@@ -10,15 +10,6 @@ header("Access-Control-Allow-Origin: http://foolishjokes.com");
 
 require_once('http://foolishjokes.com/database/settings.php');
 
-$loggedInobj = new stdClass();
-$loggedInobj->loggedIn = false;
-
-session_start();
-if (!isset($_SESSION['loggedIn'])) {
-}else{
-	$loggedInobj->loggedIn = true;
-}
-
 try {
     $connection = new mysqli('localhost', 'simpet2782_fj', 'Arewehuman', 'simpet2782_fj');
 } catch (Exception $e) {
@@ -29,15 +20,14 @@ try {
 }
 
 //Get the required data from the database
-$query = "SELECT id, content, date, author FROM jokes";
+$query = "SELECT id, content, date, author, likes FROM jokes";
 $result = $connection->query($query);
 
 //Meta information about the returnData
 $returnData['meta'] = [
     "request_uri" => $_SERVER['REQUEST_URI'],
     "query" => $query,
-    "row_count" => $result->num_rows,
-    "loggedIn" => $loggedInobj->loggedIn
+    "row_count" => $result->num_rows
 ];
 
 //Merge the data from the database with the images from the database into the newly created returnData
@@ -46,7 +36,8 @@ while ($row = $result->fetch_assoc()) {
         "id" => $row['id'],
         "content" => $row['content'],
         "date" => $row['date'],
-        "author" => $row['author']
+        "author" => $row['author'],
+        "likes" => $row['likes']
     ];
 }
 

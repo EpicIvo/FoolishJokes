@@ -8,6 +8,6 @@
 
 mysqli_report(MYSQLI_REPORT_STRICT); // Make sure we can catch errors
 define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
-define("DB_DATABASE", "FoolishJokes");
+define("DB_USER", "simpet2782_fj");
+define("DB_PASS", "Arewehuman");
+define("DB_DATABASE", "simpet2782_fj");

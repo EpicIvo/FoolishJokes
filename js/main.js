@@ -8,6 +8,7 @@ var container = document.getElementById('container');
 //divs in the joke
 var jokeContent = document.createElement('div');
 var jokeAuthor = document.createElement('div');
+var jokeLikes = document.createElement('div');
 var joke = document.getElementById('joke');
 var button = document.getElementById('downImage');
 
@@ -23,6 +24,9 @@ var alreadyClicked = false;
 //like
 var likeImage = document.getElementById('likeImage');
 var liked = false;
+var likesInput = document.getElementById('likesInput');
+var jokeIdInput = document.getElementById('jokeId');
+var postLikes = document.getElementById('postLikes');
 
 //Login
 var loggedIn = false;
@@ -97,9 +101,14 @@ function processData(data) {
     jokeAuthor.setAttribute('id', 'jokeAuthor');
     jokeAuthor.setAttribute('class', 'jokeAuthor');
     jokeAuthor.innerHTML = jokeData.jokes[jokeNumber].author;
-
+    
+    jokeLikes.setAttribute('id', 'jokeLikes');
+    jokeLikes.setAttribute('class', 'jokeLikes');
+    jokeLikes.innerHTML = jokeData.jokes[jokeNumber].likes;
+	
     joke.appendChild(jokeContent);
     joke.appendChild(jokeAuthor);
+    joke.appendChild(jokeLikes);
 
     //calc margin
     calcMargin();
@@ -139,6 +148,9 @@ function clickDetected() {
         if (loopCounter < 2) {
 
             if (loggedIn) {
+                console.log('you are now logged in');
+	        facebookButton.style.display = 'none';
+        	logIncontainer.style.visibility = 'hidden';
                 like();
                 container.removeEventListener('click', clickDetected);
                 nextJoke();
@@ -168,24 +180,12 @@ function clickDetected() {
     }
 }
 
-function hideFacebookModal(){
-	console.log('you are now logged in');
-	facebookButton.style.display = 'none';
-        logIncontainer.style.visibility = 'hidden';
-        like();
-        container.removeEventListener('click', clickDetected);
-        nextJoke();
-        alreadyClicked = false;
-        clearInterval(secondClickListenerTimerID);
-        loopCounter = 0;
-}
-
 function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function (response) {
         console.log('Successful login for: ' + response.name + ' id: ' + response.id + 'email: ' + response.email);
         document.getElementById('status').innerHTML =
-            'Thanks for logging in, ' + response.email + '!';
+            'Thanks for logging in, ' + response.name + '!';
     });
 }
 
@@ -195,16 +195,37 @@ function like() {
     }
     else {
         console.log("like");
+        jokeIdInput.value = jokeData.jokes[jokeNumber].id;
+        likesInput.value = jokeData.jokes[jokeNumber].likes++;
+        submitForm();
         liked = true;
         likeAnimation();
     }
 }
 
+function submitForm() {
+
+    var http = new XMLHttpRequest();
+    var params = "likes=" + jokeData.jokes[jokeNumber].likes + "&jokeId=" + jokeData.jokes[jokeNumber].id;
+    http.open("POST", "/php/like.php", true);
+    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    http.onreadystatechange = function() {
+	    if(http.readyState == 4 && http.status == 200) {
+		    var returnData = http.responseText;
+	    }
+    }
+    http.send(params);
+    http.onload = function() {
+    }
+    
+    jokeIdInput.value = "";
+    likesInput.value = "";
+    liked = false;
+}
+
 function likeAnimation() {
-
-    likeImage.style.transform = 'scale(150)';
-    likeImage.style.opacity = '0';
-
+    likeImage.style.transform = 'scale(40)';
+    likeImage.style.opacity = '0';	
 }
 
 function nextJoke() {
@@ -215,21 +236,25 @@ function nextJoke() {
 function textSmall() {
     jokeContent.style.transform = 'scale(0)';
     jokeAuthor.style.transform = 'scale(0)';
+    jokeLikes.style.transform = 'scale(0)';
     setTimeout(deleteJoke, 700);
 }
 
 function deleteJoke() {
     jokeContent.innerHTML = '';
     jokeAuthor.innerHTML = '';
+    jokeLikes.innerHTML = '';
     clicked = 0;
     doubleClick = false;
     liked = false;
+    likeImage.style.transform = 'scale(0)';
     newJoke();
 }
 
 function newJoke() {
     jokeContent.innerHTML = jokeData.jokes[jokeNumber].content;
     jokeAuthor.innerHTML = jokeData.jokes[jokeNumber].author;
+    jokeLikes.innerHTML = jokeData.jokes[jokeNumber].likes;
     calcMargin();
     calcImageMargin();
     setTimeout(textBig, 1000);
@@ -238,6 +263,11 @@ function newJoke() {
 function textBig() {
     jokeContent.style.transform = 'scale(1)';
     jokeAuthor.style.transform = 'scale(1)';
-
+    jokeLikes.style.transform = 'scale(1)';
+    likeImage.style.transform = 'scale(0)';
+    setTimeout(newListener, 500);
+}
+function newListener(){
     container.addEventListener('click', clickDetected);
+    likeImage.style.opacity = '1';
 }

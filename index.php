@@ -5,11 +5,14 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.4, maximum-scale=0.4, user-scalable=no" />
     <meta charset="UTF-8">
-    <title>Foolish Jokes</title>
+    <title>Foolish Jokes Development phase</title>
     <link href="style/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+<div id="likeStatus">
+</div>
 
 <div class="logInContainer" id="logInContainer">
     <div class="logInFrame">
@@ -32,6 +35,7 @@
 
         <div id='title' class="title">
             Foolish Jokes
+            <div class='betaText'><i>Development phase</i></div>
         </div>
 
         <div class="likeImageContainer" id="likeImageContainer">
@@ -41,6 +45,15 @@
         <div id="joke" class="joke">
 
         </div>
+        
+        <div class="likesForm">
+        	<form class="postLikes" id="postLikes" name="postLikes" method="post" action="<?= $_SERVER['REQUEST_URI']; ?>" >
+        		<input id="jokeId" class="jokeId" name="jokeId" type="number" />
+        		<input id="likesInput" class="likesInput" name="likesInput" type="number" />
+        		<input type="hidden" name="form" value="selectForm" />
+        	</form>
+        </div>
+        
 
     </div>
 
