@@ -6,7 +6,12 @@
  * Time: 00:45
  */
 
-mysqli_report(MYSQLI_REPORT_STRICT); // Make sure we can catch errors
+//localhost
+//simpet2782_fj
+//Arewehuman
+//simpet2782_fj
+
+mysqli_report(MYSQLI_REPORT_STRICT);
 define("DB_HOST", "localhost");
 define("DB_USER", "simpet2782_fj");
 define("DB_PASS", "Arewehuman");
