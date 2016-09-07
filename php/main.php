@@ -7,43 +7,35 @@
  */
 
 header("Access-Control-Allow-Origin: http://foolishjokes.com");
-
 require_once('http://foolishjokes.com/database/settings.php');
 
 try {
-    $connection = new mysqli('localhost', 'simpet2782_fj', 'Arewehuman', 'simpet2782_fj');
+    $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 } catch (Exception $e) {
-    //Output JSON to the outside world with 501 error
     header("HTTP/1.1 500 Internal Server Error");
     echo json_encode(["error" => "Database connection failed: " . $e->getMessage()]);
     exit;
 }
+$getAllQuery = "SELECT id, content, date, author, likes FROM jokes";
+$getAllResult = $connection->query($getAllQuery);
 
-//Get the required data from the database
-$query = "SELECT id, content, date, author, likes FROM jokes";
-$result = $connection->query($query);
-
-//Meta information about the returnData
-$returnData['meta'] = [
+$returnDataArray['meta'] = [
     "request_uri" => $_SERVER['REQUEST_URI'],
-    "query" => $query,
-    "row_count" => $result->num_rows
+    "query" => $getAllQuery,
+    "row_count" => $getAllResult->num_rows
 ];
 
-//Merge the data from the database with the images from the database into the newly created returnData
-while ($row = $result->fetch_assoc()) {
+while ($returnDataArrayRow = $getAllResult->fetch_assoc()) {
     $returnData['jokes'][] = [
-        "id" => $row['id'],
-        "content" => $row['content'],
-        "date" => $row['date'],
-        "author" => $row['author'],
-        "likes" => $row['likes']
+        "id" => $returnDataArrayRow['id'],
+        "content" => $returnDataArrayRow['content'],
+        "date" => $returnDataArrayRow['date'],
+        "author" => $returnDataArrayRow['author'],
+        "likes" => $returnDataArrayRow['likes']
     ];
 }
 
-//Free the results and the connection
-$result->close();
+$getAllResult->close();
 $connection->close();
 
-//Output JSON to the outside world
-echo json_encode($returnData);
+echo json_encode($returnDataArray);
